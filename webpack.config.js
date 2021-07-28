@@ -1,14 +1,26 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');
 
-const cssResourcesPath = require('./client/styles/shared');
+const cssResourcesPath = require(path.join(__dirname, 'client/styles/shared'));
+const generateAliases = require(path.join(__dirname, 'client/aliases'));
 
 module.exports = {
-  entry: './client/index.js',
+  entry: [
+    'webpack-hot-middleware/client', //Tell webpack to include hot reloading module berfore main.js
+    './client/index.jsx'
+  ],
   output: {
     path: '/',
     filename: 'bundle.js'
+  },
+  mode: 'development',
+  resolve: {
+    // Passes alias cofiguration object
+    alias: generateAliases(),
+    // Files extensions to resolve
+    extensions: ['.js', '.jsx']
   },
   module: {
     rules: [
@@ -17,11 +29,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            // react-refresh/babel plugin for hot reload
-            plugins: [require.resolve('react-refresh/babel')].filter(Boolean)
-          }
+          loader: 'babel-loader'
         }
       },
       {
@@ -70,6 +78,8 @@ module.exports = {
     ]
   },
   plugins: [
+    new MiniCssExtractPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: 'client/index.html'
     })

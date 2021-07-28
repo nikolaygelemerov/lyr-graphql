@@ -1,8 +1,10 @@
 const express = require('express');
-const models = require('./models');
 const { graphqlHTTP } = require('express-graphql');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
+
+const models = require('./models');
 const schema = require('./schema/schema');
 
 const app = express();
@@ -22,7 +24,7 @@ mongoose.connect(MONGO_URI, {
 });
 mongoose.connection
   .once('open', () => console.log('Connected to MongoLab instance.'))
-  .on('error', error => console.log('Error connecting to MongoLab:', error));
+  .on('error', (error) => console.log('Error connecting to MongoLab:', error));
 
 app.use(bodyParser.json());
 app.use(
@@ -33,9 +35,18 @@ app.use(
   })
 );
 
-const webpackMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
-const webpackConfig = require('../webpack.config.js');
-app.use(webpackMiddleware(webpack(webpackConfig)));
+const config = require(path.join(__dirname, '../webpack.config.js'));
+const compiler = webpack(config);
+
+const webpackDevMiddleware = require('webpack-dev-middleware')(compiler);
+
+const webpackHotMiddleware = require('webpack-hot-middleware')(compiler);
+
+//enable devServer middleware
+app.use(webpackDevMiddleware);
+
+//enable hot reloading
+app.use(webpackHotMiddleware);
 
 module.exports = app;
