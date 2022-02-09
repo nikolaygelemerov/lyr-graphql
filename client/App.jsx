@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import './styles/index.scss';
 
@@ -10,11 +10,11 @@ import styles from './App.scss';
 const App = () => {
   return (
     <div className={styles.App}>
-      <Switch>
-        <Route path="/" exact component={SongList} />
-        <Route path="/song/new" exact component={SongCreate} />
-        <Redirect to="/" />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<SongList />} />
+        <Route path="/song/new" element={<SongCreate />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </div>
   );
 };

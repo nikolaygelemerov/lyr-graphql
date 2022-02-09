@@ -7,6 +7,8 @@ const cssResourcesPath = require(path.join(__dirname, 'client/styles/shared'));
 const generateAliases = require(path.join(__dirname, 'client/aliases'));
 
 module.exports = {
+  // https://stackoverflow.com/questions/61339968/error-message-devtools-failed-to-load-sourcemap-could-not-load-content-for-chr
+  devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client', //Tell webpack to include hot reloading module berfore main.js
     './client/index.jsx'
