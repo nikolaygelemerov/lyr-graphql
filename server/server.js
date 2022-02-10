@@ -30,7 +30,7 @@ app.use(
   '/graphql',
   graphqlHTTP({
     schema,
-    graphiql: true
+    graphiql: true // Enables GraphiQL tool to manually issue GraphQL queries
   })
 );
 
