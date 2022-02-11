@@ -2,6 +2,8 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 
+import { FETCH_SONGS_QUERY } from '../../queries';
+
 const MUTATION = gql`
   mutation AddSong($title: String) {
     addSong(title: $title) {
@@ -27,7 +29,10 @@ const SongCreate = () => {
     (event) => {
       event.preventDefault();
 
-      mutateFunction({ variables: { title } });
+      mutateFunction({
+        variables: { title },
+        refetchQueries: [{ query: FETCH_SONGS_QUERY }]
+      });
     },
     [mutateFunction, title]
   );

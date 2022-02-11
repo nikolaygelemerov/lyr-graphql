@@ -1,22 +1,35 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
+
+import { FETCH_SONGS_QUERY } from '../../queries';
 
 import styles from './SongList.scss';
 
-const QUERY = gql`
-  query GetSongList {
-    songs {
+const DELETE_SONG_MUTATION = gql`
+  mutation DeleteSong($id: ID) {
+    deleteSong(id: $id) {
       id
-      title
     }
   }
 `;
 
 const SongList = () => {
-  const { data, loading } = useQuery(QUERY);
+  const { data, loading, refetch } = useQuery(FETCH_SONGS_QUERY);
 
-  console.log('data: ', data);
+  const [
+    mutateFunction,
+    { data: deleSongData, loading: deleteSonLoading, error: deleteSongError }
+  ] = useMutation(DELETE_SONG_MUTATION);
+
+  const onSongDelete = useCallback(
+    (id) => {
+      mutateFunction({
+        variables: { id }
+      });
+    },
+    [mutateFunction]
+  );
 
   const renderSongs = useCallback(() => {
     if (loading) {
@@ -24,9 +37,27 @@ const SongList = () => {
     }
 
     return Array.isArray(data.songs)
-      ? data.songs.map((song) => <li key={song.id}>{song.title}</li>)
+      ? data.songs.map((song) => (
+          <li key={song.id}>
+            {song.title}
+            <i
+              className="material-icons"
+              onClick={() => {
+                onSongDelete(song.id);
+              }}
+            >
+              delete
+            </i>
+          </li>
+        ))
       : null;
-  }, [data, loading]);
+  }, [data?.songs, loading, onSongDelete]);
+
+  useEffect(() => {
+    if (deleSongData) {
+      refetch();
+    }
+  }, [deleSongData, refetch]);
 
   return (
     <div>
