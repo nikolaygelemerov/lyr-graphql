@@ -39,7 +39,7 @@ const SongCreate = () => {
 
   return (
     <div>
-      <NavLink className="btn-floating btn-large green left" to="/">
+      <NavLink className="btn-floating btn-large green right" to="/">
         back
       </NavLink>
       <h3>Create new Song</h3>

@@ -39,7 +39,7 @@ const SongList = () => {
     return Array.isArray(data.songs)
       ? data.songs.map((song) => (
           <li key={song.id}>
-            {song.title}
+            <NavLink to={`songs/${song.id}`}>{song.title}</NavLink>
             <i
               className="material-icons"
               onClick={() => {

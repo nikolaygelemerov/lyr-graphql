@@ -1,8 +1,10 @@
 import { memo } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 import { FETCH_SONG_QUERY } from '../../queries';
+
+import LyricCreate from '../LyricCreate/LyricCreate';
 
 const SongDetail = () => {
   const params = useParams();
@@ -11,11 +13,13 @@ const SongDetail = () => {
     variables: { id: params.id }
   });
 
-  console.log('data: ', data);
-
   return (
     <div>
-      <h3>Song Details</h3>
+      <NavLink className="btn-floating btn-large blue right" to="/">
+        Back
+      </NavLink>
+      {data?.song ? <h3>{data?.song.title}</h3> : 'Loading...'}
+      <LyricCreate songId={params.id} />
     </div>
   );
 };
