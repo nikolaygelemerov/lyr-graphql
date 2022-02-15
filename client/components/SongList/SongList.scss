@@ -1,8 +1,14 @@
 .SongList {
+  border: 0.1rem solid $color10;
+  margin-bottom: $offsetMedium;
+
   li {
+    display: flex;
+    justify-content: space-between;
     padding: 1rem;
-    font-size: 2rem;
-    background-color: transparent !important;
-    border-bottom: 0.1rem solid $color10;
+
+    &:not(:last-child) {
+      border-bottom: 0.1rem solid $color10;
+    }
   }
 }

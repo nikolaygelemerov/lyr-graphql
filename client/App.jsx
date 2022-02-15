@@ -1,9 +1,9 @@
 import { memo } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import './styles/index.scss';
 
-import { SongCreate, SongList } from '@components';
+import { SongCreate, SongDetail, SongList } from '@components';
 
 import styles from './App.scss';
 
@@ -12,7 +12,8 @@ const App = () => {
     <div className={styles.App}>
       <Routes>
         <Route path="/" element={<SongList />} />
-        <Route path="/songs/new" element={<SongCreate />} />
+        <Route path="songs/new" element={<SongCreate />} />
+        <Route path="songs/:id" element={<SongDetail />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
