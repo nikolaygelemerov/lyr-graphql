@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 
 import { FETCH_SONG_QUERY } from '../../queries';
 
-import LyricCreate from '../LyricCreate/LyricCreate';
+import { LyricCreate, LyricList } from './components';
 
 const SongDetail = () => {
   const params = useParams();
@@ -19,6 +19,7 @@ const SongDetail = () => {
         Back
       </NavLink>
       {data?.song ? <h3>{data?.song.title}</h3> : 'Loading...'}
+      <LyricList lyrics={data?.song.lyrics} />
       <LyricCreate songId={params.id} />
     </div>
   );

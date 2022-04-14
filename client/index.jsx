@@ -1,4 +1,5 @@
-import ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
@@ -19,10 +20,11 @@ const Root = () => {
   );
 };
 
-ReactDOM.render(<Root />, document.querySelector('#root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Root />);
 
 if (module['hot']) {
   module['hot'].accept(['./App'], () => {
-    ReactDOM.render(<Root />, document.querySelector('#root'));
+    root.render(<Root />);
   });
 }

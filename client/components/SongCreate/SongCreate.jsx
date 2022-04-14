@@ -17,7 +17,7 @@ const SongCreate = () => {
 
   const [title, setTitle] = useState('');
 
-  const [mutateFunction, { data, loading, error }] = useMutation(MUTATION);
+  const [mutateFunction, { data }] = useMutation(MUTATION);
 
   useEffect(() => {
     if (data) {
