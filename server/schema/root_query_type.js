@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
-const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull } = graphql;
-const SongType = require('./song_type');
-const LyricType = require('./lyric_type');
+const {
+  GraphQLObjectType,
+  GraphQLList,
+  GraphQLID,
+  GraphQLNonNull
+} = require('graphql');
+
 const Lyric = mongoose.model('lyric');
 const Song = mongoose.model('song');
+
+const SongType = require('./song_type');
+const LyricType = require('./lyric_type');
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',

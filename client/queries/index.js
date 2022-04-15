@@ -22,3 +22,17 @@ export const FETCH_SONG_QUERY = gql`
     }
   }
 `;
+
+export const FETCH_LYRIC_QUERY = gql`
+  query LyricQuery($id: ID!) {
+    lyric(id: $id) {
+      id
+      song {
+        id
+        lyrics {
+          id
+        }
+      }
+    }
+  }
+`;

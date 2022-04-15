@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const models = require('./models');
+require('./models');
 const schema = require('./schema/schema');
 
 const app = express();
